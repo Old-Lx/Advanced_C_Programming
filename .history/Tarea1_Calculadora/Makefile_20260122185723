@@ -1,0 +1,14 @@
+# Variables #
+SRC := ./src
+# La convención de variables es mayúsculas #
+BUILD := ./build
+DEBUG := ./debug
+
+main: main.o
+	mkdir -p ${BUILD}/bin
+	gcc ${BUILD}/main.o -o ${BUILD}/bin/main
+main.o: ${SRC}/main.c
+	mkdir -p ${BUILD}
+	gcc -c ${SRC}/main.c -o ${BUILD}/main.o
+clean:
+	rm -fr ${BUILD}

@@ -36,11 +36,7 @@ int solver() {
             return a * b;
             break;
         case '/':
-            if (b == 0) {
-                printf("El resultado es infinito (lo que sea que eso sea)\n");
-            } else {
-                return a / b;
-            }
+            return a / b;
             break;
         default:
             printf("Operación no definida\n");

@@ -1,0 +1,15 @@
+{
+    "activitusbar.views": [
+        {
+            "name": "task.build",
+            "codicon": "gear",
+            "tooltip": "Build Project"
+        },
+        {
+            "name": "task.debug",
+            "codicon": "debug",
+            "tooltip":"Debug Project"
+            
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+# Variables #
+SRC := ./src
+# La convención de variables es mayúsculas además, hay que tener cuidado al comentar al final de una línea porque se puede agregar espacios vacíos#
+BUILD := ./build
+DEBUG := ./debug
+
+%: %.o
+	mkdir -p ${BUILD}/bin
+	gcc ${BUILD}/main.o -o ${BUILD}/bin/main
+%.o: ${SRC}/%.c
+	mkdir -p ${BUILD}
+	gcc -c ${SRC}/%<.c -o ${BUILD}/%@.o
+clean:
+	rm -fr ${BUILD}

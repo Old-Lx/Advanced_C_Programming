@@ -4,11 +4,13 @@ SRC := ./src
 BUILD := ./build
 DEBUG := ./debug
 
-main: main.o
+C_FILES := $(wildcard *.c)
+
+%: %.o
 	mkdir -p ${BUILD}/bin
-	gcc ${BUILD}/main.o -o ${BUILD}/bin/main
-main.o: ${SRC}/main.c
+	gcc ${BUILD}/%<.o -o ${BUILD}/bin/%@
+%.o: ${SRC}/%.c
 	mkdir -p ${BUILD}
-	gcc -c ${SRC}/main.c -o ${BUILD}/main.o
+	gcc -c ${SRC}/*.c -o ${BUILD}/%@.o
 clean:
 	rm -fr ${BUILD}

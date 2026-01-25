@@ -1,0 +1,25 @@
+# Variables #
+# La convención de variables es mayúsculas además, hay que tener cuidado al comentar al final de una línea porque se puede agregar espacios vacíos#
+SRC := ./Tarea1/src
+BUILD := ./Tarea1/build
+BIN_FOLDER := ${BUILD}/bin
+DEBUG := ./Tarea1/debug
+# Algunos wildcard deben usarse antes de los prerrequisitos porque pueden ocasionar problemas, por ejemplo: #
+C_FILES := $(wildcard ${SRC}/*.c)
+# usaré el wildcard patsubst que permite buscar y reemplacar patrones #
+# En este caso va a generar todos los nombres de archivos, está mejor explicado en https://www.gnu.org/software/make/manual/html_node/Text-Functions.html#Text-Functions #
+# Esta variable permitirá generar un binario diferente para cada archivo C #
+BINS := $(patsubst ${SRC}/%.c, ${BIN_FOLDER}/%, ${C_FILES})
+
+creatio_ex_nihilo: ${BINS}
+
+${BIN_FOLDER}/%: ${BUILD}/%.o
+	echo $<
+	mkdir -p ${BUILD}/bin
+	gcc $< -o $@
+${BUILD}/%.o: ${SRC}/%.c
+	echo $@
+	mkdir -p ${BUILD}
+	gcc -c $< -o $@
+clean:
+	rm -fr ${BUILD}

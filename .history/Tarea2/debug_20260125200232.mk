@@ -2,7 +2,6 @@
 SRC := ./Tarea2/src
 DEBUG := ./Tarea2/debug
 BIN_FOLDER := ${DEBUG}/bin
-OUTPUT_NAME := main
 
 # Compilation variables for C
 C_FILES := $(wildcard ${SRC}/*.c)
@@ -12,21 +11,21 @@ C_OBJS := $(patsubst ${SRC}/%.c, ${DEBUG}/%.o, ${C_FILES})
 NASM_FILES := $(wildcard ${SRC}/*.asm)
 NASM_TARGETS := $(patsubst ${SRC}/%.asm, ${DEBUG}/%.o, ${NASM_FILES})
 
-.PHONY: all clean
+.PHONY: all
 
-all: $(BIN_FOLDER)/$(OUTPUT_NAME)
+all: $(C_OBJS) $(NASM_TARGETS)
 
-$(BIN_FOLDER)/$(OUTPUT_NAME): $(C_OBJS) $(NASM_TARGETS)
-	mkdir -p $(BIN_FOLDER)
-	gcc -g3 -Og -Wall $^ -o $@
+$(BIN_FOLDER)/%: $(DEBUG) $(DEBUG)
+	mkdir -p $(OUTPUT_PATH)
+	gcc -g3 -Og -Wall $^ -o $(OUTPUT_PATH)/$@
 
 $(DEBUG)/%.o: $(SRC)/%.c
 	mkdir -p $(DEBUG)
-	gcc -g3 -Og -Wall -c $< -o $@
+	gcc -g3 -Og -Wall -c $< -o $(DEBUG)/$@
 
 $(DEBUG)/%.o: $(SRC)/%.asm
 	mkdir -p $(DEBUG)
-	nasm -felf64 -g -F dwarf $< -o $@
+	nasm -felf64 -g -F dwarf $< -o $(DEBUG)/$@
 
 clean:
 	sudo rm -fr ${DEBUG}

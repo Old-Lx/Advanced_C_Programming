@@ -1,0 +1,33 @@
+# Variables #
+SRC := ./Tarea2/src
+BUILD := ./Tarea2/build
+BIN_FOLDER := ${BUILD}/bin
+DEBUG := ./Tarea2/debug
+
+# Compilation variables for C
+C_FILES := $(wildcard ${SRC}/*.c)
+C_OBJS := $(patsubst ${SRC}/%.c, ${BUILD}/%.o, ${C_FILES})
+
+# Compilation variables for asm #
+NASM_FILES := $(wildcard ${SRC}/*.asm)
+NASM_DEPENDENCIES := $(NASM_FILES:%=$(DEPENDENCY_PATH)/%)
+NASM_TARGETS := $(patsubst ${SRC}/%.asm, ${BUILD}/%.o, ${NASM_FILES})
+
+.PHONY: all
+
+all: $(C_OBJECTS) $(NASM_TARGETS)
+
+$(OUTPUT_NAME): $(C_OBJECTS) $(NASM_TARGETS)
+	mkdir -p $(OUTPUT_PATH)
+	gcc -g3 -Og -Wall $^ -o $(OUTPUT_PATH)/$@
+
+$(C_OBJECTS): $(C_DEPENDENCIES)
+	mkdir -p $(BUILD_PATH)
+	gcc -g3 -Og -Wall -c $< -o $(BUILD_PATH)/$@
+
+$(NASM_TARGETS): $(NASM_DEPENDENCIES)
+	mkdir -p $(BUILD_PATH)
+	nasm -felf64 -g -F dwarf $< -o $(BUILD_PATH)/$@
+
+clean:
+	sudo rm -fr ${BUILD_PATH}

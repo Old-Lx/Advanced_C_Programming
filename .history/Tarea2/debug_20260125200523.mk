@@ -14,7 +14,7 @@ NASM_TARGETS := $(patsubst ${SRC}/%.asm, ${DEBUG}/%.o, ${NASM_FILES})
 
 .PHONY: all clean
 
-all: $(BIN_FOLDER)/$(OUTPUT_NAME)
+all: $(C_OBJS) $(NASM_TARGETS)
 
 $(BIN_FOLDER)/$(OUTPUT_NAME): $(C_OBJS) $(NASM_TARGETS)
 	mkdir -p $(BIN_FOLDER)

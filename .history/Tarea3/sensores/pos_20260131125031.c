@@ -1,11 +1,10 @@
 #include <stdio.h>
 
-#include "gest.h"
+#include "pos.h"
 
-s_gesture * ptr_gesture;
+s_position * ptr_position;
 
-// Por si alguien no se sabe los format specifiers como yo https://www.tutorialspoint.com/cprogramming/c_format_specifiers.htm
-sensor_print gest_print(uint8_t * selected_gest ) {
+sensor_print position_print(uint8_t *  ) {
     switch (*selected_gest)
     {
     case tap:

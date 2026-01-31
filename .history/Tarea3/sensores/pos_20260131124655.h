@@ -5,9 +5,9 @@
 #include "sensor.h" 
 
 typedef struct S_POSITION {
-    uint16_t pos_x;
-    uint16_t pos_y;
-    uint16_t pos_z;
+    uint16_t pos_x: 1;
+    uint16_t pos_y: 1;
+    uint16_t pos_z: 1;
 } s_position;
 
 

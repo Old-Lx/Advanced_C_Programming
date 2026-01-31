@@ -22,3 +22,6 @@ sensor_print gest_print(uint8_t * selected_gest ) {
         break;
     }
 }
+
+
+

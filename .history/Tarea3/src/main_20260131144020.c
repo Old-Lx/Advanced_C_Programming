@@ -8,7 +8,7 @@ int main() {
     // Ejemplo de gestos
     uint8_t sensor_read[] = {
         0xA7,
-        0x04, // Gesto
+        0x03, // Gesto
     };
 
     // Ejemplo para posición

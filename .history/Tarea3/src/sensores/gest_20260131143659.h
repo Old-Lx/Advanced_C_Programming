@@ -7,7 +7,6 @@
 // Union explanation: https://www.geeksforgeeks.org/c/c-unions/
 // Bitfield explanation: https://www.geeksforgeeks.org/c/bit-fields-c/
 
-// Estructura con los gestos definidos
 typedef struct S_GESTURE {
     union { // la unión permite leer distintos tipos de datos en un sólo espacio de memoria 
         uint8_t tap:1; // el bitfield limita los bits a usar de un espacio allocated de memoria, este usa el primer bit

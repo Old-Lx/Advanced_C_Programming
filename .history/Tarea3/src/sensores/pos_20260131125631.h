@@ -10,7 +10,7 @@ typedef struct S_POSITION {
     uint16_t pos_z;
 } s_position;
 
-// Usamos la signature para definir la función correspondiente
+
 sensor_print pos_print(uint8_t * current_position);
 
 #endif

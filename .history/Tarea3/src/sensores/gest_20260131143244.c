@@ -24,7 +24,6 @@ void gesture_print() {
 }
 
 // Por si alguien no se sabe los format specifiers como yo https://www.tutorialspoint.com/cprogramming/c_format_specifiers.htm
-// Es necesario retornar una void function debido al typedef que hicimos en sensor.h
 sensor_print gest_print(uint8_t * selected_gest) {
     return gesture_print;
 }

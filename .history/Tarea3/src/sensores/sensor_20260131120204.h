@@ -7,7 +7,6 @@ enum sensor_type {
     gest_id = 0xA7,
 }; // Ejemplos de enums: https://www.geeksforgeeks.org/c/enumeration-enum-c/
 
-// Estamos definiendo la signature que es un apuntador de void function
 typedef void (*sensor_print)();
 
 #endif

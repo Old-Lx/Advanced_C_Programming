@@ -1,0 +1,24 @@
+# Variables #
+SRC := ./Tarea3/src
+BUILD := ./Tarea2/build
+BIN_FOLDER := ${BUILD}/bin
+OUTPUT_NAME := main
+
+# Compilation variables for C
+C_FILES := $(wildcard ${SRC}/*.c)
+C_OBJS := $(patsubst ${SRC}/%.c, ${BUILD}/%.o, ${C_FILES})
+
+.PHONY: all clean
+
+all: $(BIN_FOLDER)/$(OUTPUT_NAME)
+
+$(BIN_FOLDER)/$(OUTPUT_NAME): $(C_OBJS) $(NASM_TARGETS)
+	mkdir -p $(BIN_FOLDER)
+	gcc $^ -o $@
+
+$(BUILD)/%.o: $(SRC)/%.c
+	mkdir -p $(BUILD)
+	gcc -c $< -o $@
+
+clean:
+	sudo rm -fr ${BUILD}

@@ -18,7 +18,7 @@ $(BIN_FOLDER)/$(OUTPUT_NAME): $(C_OBJS)
 	@gcc $^ -o $@
 
 $(BUILD)/%.o: $(SRC)/%.c
-	@mkdir -p $(BUILD) ${BUILD}/sensores
+	@mkdir -p $(BUILD)
 	@gcc -c $< -o $@
 
 clean:

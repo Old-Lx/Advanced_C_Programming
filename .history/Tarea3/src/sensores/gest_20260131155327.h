@@ -9,8 +9,7 @@
 
 // Estructura con los gestos definidos
 typedef struct S_GESTURE {
-    // la unión permite leer distintos tipos de datos en un sólo espacio de memoria, cuando lo usé acá me ponía los 3 bits como
-    // el mismo bit
+    // la unión permite leer distintos tipos de datos en un sólo espacio de memoria, cuando lo usé acá me
     uint8_t tap:1; // el bitfield limita los bits a usar de un espacio allocated de memoria, este usa el primer bit
     uint8_t double_tap:1; // este usa el segundo bit
     uint8_t haptic_press:1;

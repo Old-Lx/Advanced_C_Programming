@@ -6,12 +6,11 @@ s_gesture * ptr_gesture;
 
 // Verificación e impresión del gesto
 void gesture_print() {
-    if (ptr_gesture->tap) {
+    if (ptr_gesture->data.tap) {
         printf("Tap\n");
-    } else if (ptr_gesture->double_tap) {
-        printf("Double Tap\n");
-    } else if (ptr_gesture->haptic_press) {
-        printf("Haptic Press\n");
+    } else if (ptr_gesture->data.double_tap)
+    {
+        /* code */
     }
     
 }
@@ -20,5 +19,6 @@ void gesture_print() {
 // Es necesario retornar una void function debido al typedef que hicimos en sensor.h
 sensor_print gest_print(uint8_t * selected_gest) {
     ptr_gesture = (s_gesture*) selected_gest;
+    printf("tap %u double tap %u haptic %u \n",ptr_gesture->data.tap, ptr_gesture->data.double_tap, ptr_gesture->data.haptic_press);
     return gesture_print;
 }

@@ -6,10 +6,6 @@
 
 // Union explanation: https://www.geeksforgeeks.org/c/c-unions/
 // Bitfield explanation: https://www.geeksforgeeks.org/c/bit-fields-c/
-// Nota: si se usa bitfields, union dentro de struct hace que todos los datos se escriban
-// desde la misma posición de memoria, si es al revés, usan el mismo espacio de memoria, pero
-// no se reescribe desde el bit inicial, por lo que cada bitfield tendrá su espacio fijo con el offset respectivo
-
 
 // Estructura con los gestos definidos
 typedef union S_GESTURE {

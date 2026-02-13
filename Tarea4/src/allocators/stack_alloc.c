@@ -44,7 +44,7 @@ void *push(s_mem_stack_list *pool) {
     pool->freeList = block->next; // direccionamos el espacio libre al siguiente espacio
     block->next = NULL; // Le quitamos la referencia al próximo bloque para ser consistente con las operaciones de stack
 
-    return (void *)block;
+    return (void *) block;
 }
 
 void *pop(s_mem_stack_list *pool) {

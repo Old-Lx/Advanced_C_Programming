@@ -36,9 +36,14 @@ int main() {
     int *my_number = (int *)linear_block;
     *my_number = 7;
 
+    int *my_other_number = (int *)stack_block1;
+    *my_other_number = 8;
+
     printf("Linear block: %p\n", linear_block);
-    printf("Linear block number cast: %p\n", my_number);
+    printf("Linear block: %p\n", my_number);
+    printf("Linear block number: %d\n", *my_number);
 
     printf("Stack block: %p\n", stack_block1);
-    printf("Stack block number cast: %p\n", (int *)stack_block1);
+    printf("Stack block: %p\n", my_other_number);
+    printf("Stack block number: %d\n", *my_other_number);
 }

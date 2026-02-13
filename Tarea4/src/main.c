@@ -1,6 +1,8 @@
 #include <stdint.h>
+#include <stdio.h>
 
 #include "./allocators/stack_alloc.h"
+#include "./allocators/linear_alloc.h"
 
 /*
     EP5801 - Tarea 4 - Lartrax
@@ -20,5 +22,23 @@
 */
 
 int main() {
+    s_mem_linear_list linear_pool;
+    s_mem_stack_list stack_pool;
 
+    init_memory(&linear_pool);
+    init_stack(&stack_pool);
+
+    // Allocating
+    void *linear_block = linear_allocate(&linear_pool);
+    void *stack_block1 = push(&stack_pool);
+
+    // storing variables
+    int *my_number = (int *)linear_block;
+    *my_number = 7;
+
+    printf("Linear block: %p\n", linear_block);
+    printf("Linear block number cast: %p\n", my_number);
+
+    printf("Stack block: %p\n", stack_block1);
+    printf("Stack block number cast: %p\n", (int *)stack_block1);
 }

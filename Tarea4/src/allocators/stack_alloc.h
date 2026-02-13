@@ -4,26 +4,26 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#define MEMORY_POOL_SIZE 96 // (96 bytes porque esa es la ram aproximada de un PIC16)
+#define STACK_POOL_SIZE 96 // (96 bytes porque esa es la ram aproximada de un PIC16)
 
 // Apuntador de espacios de memoria
-typedef struct s_mem_block {
-    s_mem_block *next;
-   s_mem_block *prev;
-} s_mem_block;
+typedef struct s_mem_block_stack {
+   struct s_mem_block_stack *next;
+   struct s_mem_block_stack *prev;
+} s_mem_block_stack;
 
 // Bloque de memoria
-typedef struct s_mem_free_list {
-    s_mem_block *freeList;
-    unsigned char pool[MEMORY_POOL_SIZE]; // Se usó el ejemplo de memory pool para reservar estáticamente la memoria que se use
-} s_mem_free_list;
+typedef struct s_mem_stack_list {
+    s_mem_block_stack *freeList;
+    unsigned char pool[STACK_POOL_SIZE]; // Se usó el ejemplo de STACK pool para reservar estáticamente la memoria que se use
+} s_mem_stack_list;
 
-void* allocate(s_mem_free_list *pool);
+void* init_stack(s_mem_stack_list *pool);
 
-void* free(s_mem_free_list *pool, void *ptr);
+void* stack_free(s_mem_stack_list *pool, void *ptr);
 
-void* push(s_mem_free_list *pool, s_mem_block *block);
+void* push(s_mem_stack_list *pool);
 
-void* pop(s_mem_free_list *pool);
+void* pop(s_mem_stack_list *pool);
 
 #endif

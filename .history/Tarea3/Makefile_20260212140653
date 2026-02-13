@@ -1,6 +1,6 @@
 # Variables #
-SRC := ./src
-BUILD := ./build
+SRC := ./Tarea3/src
+BUILD := ./Tarea3/build
 BIN_FOLDER := ${BUILD}/bin
 OUTPUT_NAME := main
 

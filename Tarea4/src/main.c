@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#include "./calculator/rpn_calc.h"
 #include "./allocators/stack_alloc.h"
 #include "./allocators/linear_alloc.h"
 
@@ -21,6 +22,11 @@
     https://github.com/johanofverstedt/stack_allocator/blob/master/sa.c
     https://dev.to/jonahgoldsmith/temporary-allocations-in-cc-oi8
     https://medium.com/@sgn00/high-performance-memory-management-arena-allocators-c685c81ee338
+
+    Para la calculadora RPN me inspiré en:
+
+    https://breder.org/rpn-calculator
+    https://rosettacode.org/wiki/Parsing/RPN_calculator_algorithm
 */
 
 void allocators_test() {
@@ -48,12 +54,13 @@ void allocators_test() {
     printf("Stack block: %p\n", stack_block1);
     // printf("Stack block: %p\n", my_other_number); Es análogo a la línea anterior
     printf("Stack block number: %d\n", *my_other_number);
-    printf("pop the block: %p\n", pop(&stack_pool));
+    printf("pop the block: %p\n", (int *) pop(&stack_pool));
     printf("Next free: %p\n", stack_pool.freeList); // El próximo elemento libre es el espacio que estaba ocupado antes por *my_other_number por lo que la próxima vez que se haga push, quitaremos ese valor previo, es decir, la memoria está disponible para sobreescribir
     stack_free(&stack_pool); // Liberamos el pool para poder reinicializarlo de ser necesario
     printf("Pool: %p\n", stack_pool.freeList); // La lista de libres ahora es NULL, permitiendo reinicializarla
 }
 
 int main() {
-    allocators_test();
+    // allocators_test();
+    run_calc();
 }

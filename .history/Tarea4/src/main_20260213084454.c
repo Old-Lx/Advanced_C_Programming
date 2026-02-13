@@ -16,7 +16,6 @@
     https://github.com/dimonomid/umm_malloc/blob/master/umm_malloc.c
     https://github.com/johanofverstedt/stack_allocator/blob/master/sa.c
     https://dev.to/jonahgoldsmith/temporary-allocations-in-cc-oi8
-    https://medium.com/@sgn00/high-performance-memory-management-arena-allocators-c685c81ee338
 */
 
 int main() {

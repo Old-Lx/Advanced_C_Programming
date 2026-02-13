@@ -22,7 +22,7 @@ void *init_memory(s_mem_list *pool) {
 }
 
 void *allocate(s_mem_list *pool) {
-    if (!pool->freeList) { // Chequeamos que freeList sea distinto de NULL
+    if (!pool->freeList) {
         printf("No hay más memoria\n");
         return NULL;
     }

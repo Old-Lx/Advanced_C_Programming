@@ -45,7 +45,7 @@ void *pop(s_mem_free_list *pool) {
         return NULL;
     }
 
-    s_mem_block *block = pool->freeList->prev; // guardaremos el bloque que se quitará del pool
-    pool->freeList = pool->freeList->prev; // Restauramos el espacio libre de la memoria
+    s_mem_block *block = pool->freeList;
+    pool->freeList = pool->freeList->prev;
     return (void *) block;
 }

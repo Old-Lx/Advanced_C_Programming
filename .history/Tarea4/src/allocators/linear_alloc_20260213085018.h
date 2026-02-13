@@ -8,22 +8,18 @@
 
 // Apuntador de espacios de memoria
 typedef struct s_mem_block {
+    s_mem_block *current;
    s_mem_block *next;
 } s_mem_block;
 
 // Bloque de memoria
-typedef struct s_mem_list {
-    s_mem_block *start_block;
+typedef struct s_mem_destructur {
     s_mem_block *freeList;
     unsigned char pool[MEMORY_POOL_SIZE]; // Se usó el ejemplo de memory pool para reservar estáticamente la memoria que se use
-} s_mem_list;
+} s_mem_free_list;
 
-void *init_memory(s_mem_list *pool);
+void* allocate(s_mem_free_list *pool);
 
-void* allocate(s_mem_list *pool);
-
-void* deallocate(s_mem_list *pool);
-
-void *destructor(s_mem_list *pool);
+void* free(s_mem_free_list *pool, void *ptr);
 
 #endif

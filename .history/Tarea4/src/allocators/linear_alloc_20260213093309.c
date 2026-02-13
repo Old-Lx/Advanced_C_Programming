@@ -12,17 +12,15 @@ void *init_memory(s_mem_list *pool) {
         current->next = (s_mem_block *)((unsigned char *)current + sizeof(s_mem_block)); // Se asigna el espacio del próximo bloque
         if (!i) {
             pool->start_block = current; // Guardamos la posición del primer elemento
-            current = pool->start_block->next;
-        } else {
-            current = current->next; // seleccionamos el próximo bloque y repetimos hasta asignar una dirección a cada bloque
         }
+        current = current->next; // seleccionamos el próximo bloque y repetimos hasta asignar una dirección a cada bloque
     }
 
     current->next = NULL; // Cuando agotamos el pool, apuntamos a null
 }
 
 void *allocate(s_mem_list *pool) {
-    if (!pool->freeList) { // Chequeamos que freeList sea distinto de NULL
+    if (!pool->freeList) {
         printf("No hay más memoria\n");
         return NULL;
     }
@@ -35,15 +33,5 @@ void *allocate(s_mem_list *pool) {
 }
 
 void *deallocate(s_mem_list *pool) {
-    if (pool->start_block) { // Si hay un start block distinto de null, podemos vaciar la memoria
-        s_mem_block *temp = pool->start_block->next; // Seguimos la convención de arenas y cambiamos nuestro start al siguiente bloque
-        pool->start_block = NULL; // Borramos el contenido de start_block
-        pool->start_block = temp; // recuperamos el apuntador
-    }
-}
-
-void *destructor(s_mem_list *pool) {
-    for (int i = 0; (MEMORY_POOL_SIZE / sizeof(s_mem_block)) - 1; i++) { // Se divide el segmento de memoria estático en bloques
-        deallocate(&pool);
-    }
+    pool->start_block = pool->start_block->next; // Seguimos la convención de arenas y cambiamos nuestro start al siguiente bloque
 }

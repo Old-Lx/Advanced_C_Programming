@@ -8,6 +8,7 @@
 
 // Apuntador de espacios de memoria
 typedef struct s_mem_block {
+    s_mem_block *current;
    s_mem_block *next;
 } s_mem_block;
 
@@ -22,8 +23,6 @@ void *init_memory(s_mem_list *pool);
 
 void* allocate(s_mem_list *pool);
 
-void* deallocate(s_mem_list *pool);
-
-void *destructor(s_mem_list *pool);
+void* free(s_mem_list *pool, void *ptr);
 
 #endif

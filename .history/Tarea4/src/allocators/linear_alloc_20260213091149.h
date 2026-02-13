@@ -22,8 +22,6 @@ void *init_memory(s_mem_list *pool);
 
 void* allocate(s_mem_list *pool);
 
-void* deallocate(s_mem_list *pool);
-
-void *destructor(s_mem_list *pool);
+void* free(s_mem_list *pool, void *ptr);
 
 #endif

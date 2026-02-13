@@ -22,7 +22,7 @@ void *init_memory(s_mem_list *pool) {
 }
 
 void *allocate(s_mem_list *pool) {
-    if (!pool->freeList) { // Chequeamos que freeList sea distinto de NULL
+    if (!pool->freeList) {
         printf("No hay más memoria\n");
         return NULL;
     }
@@ -35,11 +35,9 @@ void *allocate(s_mem_list *pool) {
 }
 
 void *deallocate(s_mem_list *pool) {
-    if (pool->start_block) { // Si hay un start block distinto de null, podemos vaciar la memoria
-        s_mem_block *temp = pool->start_block->next; // Seguimos la convención de arenas y cambiamos nuestro start al siguiente bloque
-        pool->start_block = NULL; // Borramos el contenido de start_block
-        pool->start_block = temp; // recuperamos el apuntador
-    }
+    s_mem_block *temp = pool->start_block->next; // Seguimos la convención de arenas y cambiamos nuestro start al siguiente bloque
+    pool->start_block = (void *) 0x00; // Borramos el contenido de start_block
+    pool->start_block = temp; // recuperamos el apuntador
 }
 
 void *destructor(s_mem_list *pool) {

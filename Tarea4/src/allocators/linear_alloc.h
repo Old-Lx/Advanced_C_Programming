@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#define LINEAR_POOL_SIZE 96 // (96 bytes porque esa es la ram aproximada de un PIC16)
+#define LINEAR_POOL_SIZE 1024 // 1KB le puse
 
 // Apuntador de espacios de memoria
 typedef struct s_mem_block_linear {

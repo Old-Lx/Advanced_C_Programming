@@ -9,10 +9,10 @@ void* init_stack(s_mem_stack_list *pool) {
     pool->freeList = (s_mem_block_stack *)pool->pool; // Ponemos todo el pool en la lista
     s_mem_block_stack *current = pool->freeList; // se usará para iterar y que se divida exactamente en los bloques definidos
 
-    int block_number = STACK_POOL_SIZE / sizeof(s_mem_block_stack);
+    int block_qtty = STACK_POOL_SIZE / sizeof(s_mem_block_stack); // Cantidad de bloques en nuestro stack
 
     // creamos la lista
-    for (int i = 0; i < block_number - 1; i++) {
+    for (int i = 0; i < block_qtty - 1; i++) {
         // Si estamos en el índice 0, no guardamos nada en prev
         if (i) {
             current->prev = (s_mem_block_stack *)((unsigned char *)current - sizeof(s_mem_block_stack));
@@ -27,10 +27,8 @@ void* init_stack(s_mem_stack_list *pool) {
     return NULL;
 }
 
-void *stack_free(s_mem_stack_list *pool, void *ptr) {
-    s_mem_block_stack *block = (s_mem_block_stack *) ptr; // El void *ptr será el bloque que estaremos liberando
-    block->next = pool->freeList; // El bloque que sigue al que estamos liberando lo apuntamos a la lista de bloques libres
-    pool->freeList = block; // Ahora añadimos el bloque en sí a la lista de libres
+void *stack_free(s_mem_stack_list *pool) {
+    pool->freeList = NULL;
     return NULL;
 }
 

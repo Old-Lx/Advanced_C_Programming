@@ -8,6 +8,8 @@
     EP5801 - Tarea 4 - Lartrax
     Memory allocators - Linear and Stack
 
+    NOTA IMPORTANTE: Implementé mi propio stack y linear allocs porque no había descargado las arenas y me confundí
+
     Hay que implementar ambos y hacer una calculadora RPN con el de stack
 
     Información útil sobre memory allocation: https://www.geeksforgeeks.org/c/static-and-dynamic-memory-allocation-in-c/\
@@ -21,7 +23,7 @@
     https://medium.com/@sgn00/high-performance-memory-management-arena-allocators-c685c81ee338
 */
 
-int main() {
+void allocators_test() {
     s_mem_linear_list linear_pool;
     s_mem_stack_list stack_pool;
 
@@ -40,10 +42,18 @@ int main() {
     *my_other_number = 8;
 
     printf("Linear block: %p\n", linear_block);
-    printf("Linear block: %p\n", my_number);
-    printf("Linear block number: %d\n", *my_number);
+    // printf("Linear block: %p\n", my_number); Análogo a la línea anterior, es decir, mismo bloque de memoria
+    printf("Linear block number: %d\n\n", *my_number);
 
     printf("Stack block: %p\n", stack_block1);
-    printf("Stack block: %p\n", my_other_number);
+    // printf("Stack block: %p\n", my_other_number); Es análogo a la línea anterior
     printf("Stack block number: %d\n", *my_other_number);
+    printf("pop the block: %p\n", pop(&stack_pool));
+    printf("Next free: %p\n", stack_pool.freeList); // El próximo elemento libre es el espacio que estaba ocupado antes por *my_other_number por lo que la próxima vez que se haga push, quitaremos ese valor previo, es decir, la memoria está disponible para sobreescribir
+    stack_free(&stack_pool); // Liberamos el pool para poder reinicializarlo de ser necesario
+    printf("Pool: %p\n", stack_pool.freeList); // La lista de libres ahora es NULL, permitiendo reinicializarla
+}
+
+int main() {
+    allocators_test();
 }

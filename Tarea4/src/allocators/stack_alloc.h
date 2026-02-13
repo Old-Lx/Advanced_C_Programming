@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#define STACK_POOL_SIZE 96 // (96 bytes porque esa es la ram aproximada de un PIC16)
+#define STACK_POOL_SIZE 32768 // La HP 50g  tiene 512KB de ram
 
 // Apuntador de espacios de memoria
 typedef struct s_mem_block_stack {
@@ -20,7 +20,7 @@ typedef struct s_mem_stack_list {
 
 void* init_stack(s_mem_stack_list *pool);
 
-void* stack_free(s_mem_stack_list *pool, void *ptr);
+void* stack_free(s_mem_stack_list *pool);
 
 void* push(s_mem_stack_list *pool);
 

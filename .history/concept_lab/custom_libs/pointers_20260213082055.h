@@ -1,0 +1,13 @@
+#ifndef POINTERS_H
+#define POINTERS_H
+
+// eg = example given or exemplai gratia (del latín pero mal traducido)
+typedef struct s_ptr_eg {
+    int *first_element;
+    char *second_element[60];
+} s_ptr_eg;
+
+int my_number = 7;
+int *my_number_ptr = &my_number;
+
+#endif

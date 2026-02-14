@@ -53,6 +53,7 @@ void *pop(s_mem_stack_list *pool) {
         return NULL;
     }
     
+    // Ojo acá que de repente da bug al hacer pop del primer elemento
     s_mem_block_stack *block = pool->freeList->prev; // guardaremos el bloque que se quitará del pool
     s_mem_block_stack *next_block = pool->freeList->next->prev; // Si no hago esto, por alguna razón el apuntador next se perdía
     pool->freeList = pool->freeList->prev; // Restauramos el espacio libre de la memoria

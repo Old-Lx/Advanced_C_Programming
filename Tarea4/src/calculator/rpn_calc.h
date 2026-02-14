@@ -22,7 +22,9 @@
 
 void *init_calc();
 
-void *get_char(char *c);
+void print_stack(s_mem_stack_list *stack_calc);
+
+void *get_char(char *c, s_mem_stack_list *stack_calc);
 
 void *parse_char(s_mem_stack_list *stack_calc);
 

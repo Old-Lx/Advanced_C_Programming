@@ -22,17 +22,19 @@ void *init_calc() {
 
 void print_stack(s_mem_stack_list *stack_calc){
     if (stack_calc->qtty) {
-        printf("[");
-        for (int i = 0; i < stack_calc->qtty - 1; i++) {
-            
+        s_mem_block_stack *temp = stack_calc->freeList;
+        while (temp->prev) {
+            printf("[%d]", *(int *)temp->prev);
+            temp = temp->prev;
         }
-        printf("]");
+        printf("\n");
     }
 };
 
 // Acá leemos el número u operación
-void *get_char(char *c) {
+void *get_char(char *c, s_mem_stack_list *stack_calc) {
     printf("> ");
+    print_stack(stack_calc);
     scanf("%s", c);
     assert(c != NULL); // Una aserción es una especie de if
     return NULL;
@@ -60,7 +62,7 @@ bool is_an_op(char *c) {
 // Procesamos lo que recibió el buffer, se llama char, pero al final usé string, sólo que me dió flojera cambiar el nombre de la función xd
 void *parse_char(s_mem_stack_list *stack_calc) {
     char c[4] ; // Un buffer que admite hasta 3 caracteres para dígitos
-    get_char(c);
+    get_char(c, stack_calc);
     printf("Pressed: %s\n", c);
 
     // Verificamos si lo que recibimos fue una operación, un número o un caracter que no nos interesa

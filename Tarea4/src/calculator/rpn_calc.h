@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "../allocators/stack_alloc.h"
@@ -27,7 +28,7 @@ void *parse_char(s_mem_stack_list *stack_calc);
 
 int *parse_int(char *selected_char, s_mem_stack_list *stack_calc);
 
-int *parse_op(char* selectec_char);
+int *parse_op(char* selectec_char, s_mem_stack_list *stack_calc);
 
 void *run_calc();
 

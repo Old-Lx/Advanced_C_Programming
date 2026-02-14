@@ -5,57 +5,76 @@
 #include <string.h>
 
 #include "../allocators/stack_alloc.h"
+#include "rpn_calc.h"
 
+s_mem_stack_list stack_calc;
+    
 // Para un ejemplo de RPN Calculator puedes ver https://breder.org/rpn-calculator
 // Acá usaré el stack que definí para ejecutar la calculadora
+
+// Inicializamos el stack en la variable que predefinimos para que sea el stack de la calculadora
 void *init_calc() {
-    s_mem_stack_list *stack_calc;
+    init_stack(&stack_calc);
 
-    init_stack(stack_calc);
-
-    return (void *)stack_calc;
+    return &stack_calc;
 }
 
-void *get_char(s_mem_stack_list *stack_calc) {
-    char* c;
-    scanf("%c", c);
-    assert(c != NULL);
-    printf("Pressed: %s\n", c);
-    return c;
+// Acá leemos el número u operación
+void *get_char(char *c) {
+    printf("> ");
+    scanf("%s", c);
+    assert(c != NULL); // Una aserción es una especie de if
+    return NULL;
 }
 
+// Con esta función verifico que la string contenga un número sin caracteres raros
+bool is_a_number(char *c) {
+    for (int i = 0; i < (int)strlen(c); i++) {
+        char checker = c[i];
+        if (checker < '0' || checker > '9') {
+            printf("false\n");
+            return false;
+        }
+    }
+    return true;
+}
+
+// Procesamos lo que recibió el buffer, se llama char, pero al final usé string, sólo que me dió flojera cambiar el nombre de la función xd
 void *parse_char(s_mem_stack_list *stack_calc) {
-    char *c = get_char(stack_calc);
+    char c[4] ; // Un buffer que admite hasta 3 caracteres para dígitos
+    get_char(c);
+    printf("Pressed: %s\n", c);
 
-    int ascii_value = *(int*) c;
-    if (ascii_value >= 48 && ascii_value <= 51) {
-        int my_int = parse_int(c, stack_calc);
-        printf("my int %d\n", my_int);
-    } else if (ascii_value == 47 || ascii_value == 42 || ascii_value == 43 || ascii_value == 45) {
+    // Verificamos si lo que recibimos fue una operación, un número o un caracter que no nos interesa
+    if (!(strcmp(c, "+") || strcmp(c, "-") || strcmp(c, "*") || strcmp(c, "/") || strcmp(c, "%%"))) {
         parse_op(c);
+    } else if (is_a_number(c)) {
+        
     } else{
         printf("Operación no definida\n");
-        get_char_op(stack_calc);
+        parse_char(stack_calc);
     }
 }
 
-// Chequea si lo que se recibió fue int o char
+// Registra el número recibido en el stack
 int *parse_int(char *selected_char, s_mem_stack_list *stack_calc) {
     int selected_number;
     // Conversor de ASCII a decimal
-    while (*selected_char != '\0' && *selected_char != '\r' && *selected_char != '\n') {
-        assert((*selected_char) >= '0' && (*selected_char) <= '9');
+    while (selected_char != '\0' && selected_char != '\r' && selected_char != '\n') {
+        assert((selected_char) >= '0' && (selected_char) <= '9');
         selected_number *= 10;
-        selected_number += (*selected_char) - '0';
+        selected_number += (int) selected_char - '0';
         
         void *character_block = push(stack_calc);
         int *selected_number = (int *)character_block;
+        selected_number;
         
         selected_char++;
     }
-    return selected_number;
+    return (int *)selected_number;
 }
 
+// Registra la operación recibida en el stack
 int *parse_op(char* selectec_char) {}
 
 // Ejecución de la calculadora

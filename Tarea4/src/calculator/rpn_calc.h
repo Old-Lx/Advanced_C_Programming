@@ -21,11 +21,11 @@
 
 void *init_calc();
 
-void *get_char(s_mem_stack_list *stack_calc, char *c);
+void *get_char(char *c);
 
 void *parse_char(s_mem_stack_list *stack_calc);
 
-int *parse_int(char *selected_char);
+int *parse_int(char *selected_char, s_mem_stack_list *stack_calc);
 
 int *parse_op(char* selectec_char);
 

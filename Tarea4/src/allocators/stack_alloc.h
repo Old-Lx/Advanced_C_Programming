@@ -16,6 +16,7 @@ typedef struct s_mem_block_stack {
 typedef struct s_mem_stack_list {
     s_mem_block_stack *freeList;
     unsigned char pool[STACK_POOL_SIZE]; // Se usó el ejemplo de STACK pool para reservar estáticamente la memoria que se use
+    int qtty;
 } s_mem_stack_list;
 
 void* init_stack(s_mem_stack_list *pool);

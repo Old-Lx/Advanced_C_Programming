@@ -20,6 +20,16 @@ void *init_calc() {
     return &stack_calc;
 }
 
+void print_stack(s_mem_stack_list *stack_calc){
+    if (stack_calc->qtty) {
+        printf("[");
+        for (int i = 0; i < stack_calc->qtty - 1; i++) {
+            
+        }
+        printf("]");
+    }
+};
+
 // Acá leemos el número u operación
 void *get_char(char *c) {
     printf("> ");
@@ -58,7 +68,6 @@ void *parse_char(s_mem_stack_list *stack_calc) {
         parse_op(c, stack_calc);
     } else if (is_a_number(c)) {
         parse_int(c, stack_calc);
-        printf("stack number %d\n", *stack_calc->freeList->prev);
     } else{
         printf("Operación no definida\n");
         parse_char(stack_calc);
@@ -95,7 +104,10 @@ int which_op(char *c) {
 // Ejecuta la operación con los dos números anteriores
 int *parse_op(char* selectec_char, s_mem_stack_list *stack_calc) {
     int *first_number_block = (int *)pop(stack_calc);
-    int *second_number_block = (int *)pop(stack_calc);
+    int *second_number_block = 0;
+    if (stack_calc->qtty > 1) {
+        second_number_block = (int *)pop(stack_calc);
+    }
     
     if (first_number_block && second_number_block) {
         switch (which_op(selectec_char)) {
@@ -120,6 +132,10 @@ int *parse_op(char* selectec_char, s_mem_stack_list *stack_calc) {
                 push_int(rem, stack_calc);
                 break;
             default:
+                push_int(*first_number_block, stack_calc); // esto por si alguien presiona muchas veces una operación inexistente, garantiza que no perdamos los números
+                if (*second_number_block) {
+                    push_int(*second_number_block, stack_calc); // El segundo número se pierde si es cero si me da chance mejoro esto xd
+                }
                 break;
         }
     } else if (first_number_block) {

@@ -105,45 +105,46 @@ int which_op(char *c) {
 
 // Ejecuta la operación con los dos números anteriores
 int *parse_op(char* selectec_char, s_mem_stack_list *stack_calc) {
-    int *first_number_block = (int *)pop(stack_calc);
-    int *second_number_block = 0;
-    if (stack_calc->qtty > 1) {
-        second_number_block = (int *)pop(stack_calc);
+    printf("pop %d\n", *(int *)pop(stack_calc));
+    int first_number = *(int *)pop(stack_calc);
+    int second_number = 0;
+    if (stack_calc->qtty >= 1) {
+        second_number = *(int *)pop(stack_calc);
     }
     
-    if (first_number_block && second_number_block) {
+    if (first_number && second_number) {
         switch (which_op(selectec_char)) {
             case ADD:
-                int sum = (*first_number_block) + (*second_number_block);
+                int sum = (first_number) + (second_number);
                 push_int(sum, stack_calc);
                 break;
             case SUB:
-                int sub = (*first_number_block) - (*second_number_block);
+                int sub = (first_number) - (second_number);
                 push_int(sub, stack_calc);
                 break;
             case MUL:
-                int mul = (*first_number_block) * (*second_number_block);
+                int mul = (first_number) * (second_number);
                 push_int(mul, stack_calc);
                 break;
             case DIV:
-                int div = (*first_number_block) / (*second_number_block);
+                int div = (first_number) / (second_number);
                 push_int(div, stack_calc);
                 break;
             case REM:
-                int rem = (*first_number_block) % (*second_number_block);
+                int rem = (first_number) % (second_number);
                 push_int(rem, stack_calc);
                 break;
             default:
-                push_int(*first_number_block, stack_calc); // esto por si alguien presiona muchas veces una operación inexistente, garantiza que no perdamos los números
-                if (*second_number_block) {
-                    push_int(*second_number_block, stack_calc); // El segundo número se pierde si es cero si me da chance mejoro esto xd
+                push_int(first_number, stack_calc); // esto por si alguien presiona muchas veces una operación inexistente, garantiza que no perdamos los números
+                if (second_number) {
+                    push_int(second_number, stack_calc); // El segundo número se pierde si es cero si me da chance mejoro esto xd
                 }
                 break;
         }
-    } else if (first_number_block) {
+    } else if (first_number) {
         switch (which_op(selectec_char)) {
             case SUB:
-                int opposite_sign = (*first_number_block) * (-1);
+                int opposite_sign = (first_number) * (-1);
                 push_int(opposite_sign, stack_calc);
                 break;
             default:

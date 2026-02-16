@@ -52,6 +52,8 @@ void *pop(s_mem_stack_list *pool) {
     if (!pool || !pool->freeList) { // Chequeamos que el pool esté reservado y que tenga espacio
         return NULL;
     }
+
+    printf("before pop %d\n", *(int *)pool->freeList->prev);
     
     // Ojo acá que de repente da bug al hacer pop del primer elemento
     s_mem_block_stack *block = pool->freeList->prev; // guardaremos el bloque que se quitará del pool
@@ -59,6 +61,8 @@ void *pop(s_mem_stack_list *pool) {
     pool->freeList = pool->freeList->prev; // Restauramos el espacio libre de la memoria
     pool->freeList->next = next_block;
     pool->qtty--;
+
+    printf("popped block %d\n", *(int *)block);
     
     return (void *) block;
 }

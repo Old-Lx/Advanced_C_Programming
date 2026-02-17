@@ -1,0 +1,29 @@
+#ifndef LINEAR_ALLOC_H
+#define LINEAR_ALLOC_H
+
+#include <stdint.h>
+#include <stddef.h>
+
+#define LINEAR_POOL_SIZE 1024 // 1KB le puse
+
+// Apuntador de espacios de memoria
+typedef struct s_mem_block_linear {
+   struct s_mem_block_linear *next;
+} s_mem_block_linear;
+
+// Bloque de memoria
+typedef struct s_mem_linear_list {
+    s_mem_block_linear *start_block;
+    s_mem_block_linear *freeList;
+    unsigned char pool[LINEAR_POOL_SIZE]; // Se usó el ejemplo de linear pool para reservar estáticamente la memoria que se use
+} s_mem_linear_list;
+
+void *init_memory(s_mem_linear_list *pool);
+
+void* linear_allocate(s_mem_linear_list *pool);
+
+void* deallocate(s_mem_linear_list *pool);
+
+void *destructor(s_mem_linear_list *pool);
+
+#endif

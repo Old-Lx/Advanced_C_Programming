@@ -1,11 +1,11 @@
 {
-    "version":"0.2.0",
+    "version": "0.2.0",
     "configurations": [
         {
             "name": "gdb",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/Tarea1/debug/bin",
+            "program": "${workspaceRoot}/Tarea4/debug/bin/main", 
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
             "MIMode": "gdb",
@@ -17,7 +17,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "build-make"
+            "preLaunchTask": "make-build" 
         }
     ]
 }

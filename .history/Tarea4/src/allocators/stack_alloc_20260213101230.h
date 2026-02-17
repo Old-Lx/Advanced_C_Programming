@@ -1,0 +1,29 @@
+#ifndef STACK_ALLOC_H
+#define STACK_ALLOC_H
+
+#include <stdint.h>
+#include <stddef.h>
+
+#define STACK_POOL_SIZE 96 // (96 bytes porque esa es la ram aproximada de un PIC16)
+
+// Apuntador de espacios de memoria
+typedef struct s_mem_block_linear {
+    s_mem_block_linear *next;
+   s_mem_block_linear *prev;
+} s_mem_block_linear;
+
+// Bloque de memoria
+typedef struct s_mem_free_list {
+    s_mem_block_linear *freeList;
+    unsigned char pool[STACK_POOL_SIZE]; // Se usó el ejemplo de STACK pool para reservar estáticamente la memoria que se use
+} s_mem_free_list;
+
+void* allocate(s_mem_free_list *pool);
+
+void* free(s_mem_free_list *pool, void *ptr);
+
+void* push(s_mem_free_list *pool, s_mem_block_linear *block);
+
+void* pop(s_mem_free_list *pool);
+
+#endif

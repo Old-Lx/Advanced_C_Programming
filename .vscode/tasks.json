@@ -1,12 +1,14 @@
 {
     "version": "2.0.0",
     "tasks": [
-        {
-            "label": "task.build",
-            "type": "shell",
-            "command": "./build_script.sh",
-            "group": "build",
-            "problemMatcher": []
-        }
-    ]
+    {
+      "label": "make-build",
+      "type": "shell",
+      "command": "make -f Debug.mk",
+      "group": { "kind": "build", "isDefault": true },
+      "options": {
+        "cwd": "${workspaceFolder}/Tarea4"
+    }
+    }
+  ]
 }

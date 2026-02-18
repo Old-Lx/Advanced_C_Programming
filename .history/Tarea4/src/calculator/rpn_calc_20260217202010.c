@@ -10,19 +10,6 @@
 
 // El stack de nuestra calculadora
 s_mem_stack_list stack_calc;
-
-// Hecho con Figlet
-char title[] = 
-"  ____      _            _           _                 \n"
-" / ___|__ _| | ___ _   _| | __ _  __| | ___  _ __ __ _\n"
-"| |   / _` | |/ __| | | | |/ _` |/ _` |/ _ \\| '__/ _` |\n"
-"| |__| (_| | | (__| |_| | | (_| | (_| | (_) | | | (_| |\n"
-" \\____\\__,_|_|\\___|\\__,_|_|\\__,_|\\__,_|\\___/|_|  \\__,_|\n\n"
-" ____  ____  _   _ \n"
-"|  _ \\|  _ \\| \\ | |\n"
-"| |_) | |_) |  \\| |\n"
-"|  _ <|  __/| |\\  |\n"
-"|_| \\_\\_|   |_| \\_|\n\n";
     
 // Para un ejemplo de RPN Calculator puedes ver https://breder.org/rpn-calculator
 // Acá usaré el stack que definí para ejecutar la calculadora
@@ -77,6 +64,7 @@ bool is_an_op(char *c) {
 void *parse_char(s_mem_stack_list *stack_calc) {
     char c[4] ; // Un buffer que admite hasta 3 caracteres para dígitos
     get_char(c, stack_calc);
+    printf("Pressed: %s\n", c);
 
     // Verificamos si lo que recibimos fue una operación, un número o un caracter que no nos interesa
     if (is_an_op(c)) {
@@ -172,8 +160,6 @@ int *parse_op(char* selectec_char, s_mem_stack_list *stack_calc) {
 // Ejecución de la calculadora
 void *run_calc() {
     s_mem_stack_list *stack_calc = init_calc();
-
-    printf("%s\n", title);
 
     while (true) {
         parse_char(stack_calc);

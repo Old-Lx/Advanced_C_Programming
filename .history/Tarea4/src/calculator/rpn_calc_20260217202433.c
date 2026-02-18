@@ -11,7 +11,6 @@
 // El stack de nuestra calculadora
 s_mem_stack_list stack_calc;
 
-// Hecho con Figlet
 char title[] = 
 "  ____      _            _           _                 \n"
 " / ___|__ _| | ___ _   _| | __ _  __| | ___  _ __ __ _\n"
@@ -77,6 +76,7 @@ bool is_an_op(char *c) {
 void *parse_char(s_mem_stack_list *stack_calc) {
     char c[4] ; // Un buffer que admite hasta 3 caracteres para dígitos
     get_char(c, stack_calc);
+    printf("Pressed: %s\n", c);
 
     // Verificamos si lo que recibimos fue una operación, un número o un caracter que no nos interesa
     if (is_an_op(c)) {

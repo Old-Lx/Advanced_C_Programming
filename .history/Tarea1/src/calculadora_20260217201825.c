@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <float.h>
 
-// Hecho con figlet
 char title[] = 
 "  ____      _            _           _                 \n"
 " / ___|__ _| | ___ _   _| | __ _  __| | ___  _ __ __ _\n"

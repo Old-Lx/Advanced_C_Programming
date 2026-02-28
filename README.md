@@ -17,22 +17,20 @@
     2. - [x] Utilizar alojador de stack para construir una calculadora de stack usando ReversePolishNotation (RPN)
 
 ### Tarea 5
-1. - [ ] Usar los vectores para implementar una estructura custom para una partícula (posición $(x, y, z)$ y su velocidad $v$)
+1. - [ ] Usar los vectores para implementar una estructura custom para una partícula (posición $(x, y, z)$ y su velocidad $\vec{v}$)
 
-2. - [ ] Utilizar vectores para almacenar n partículas
+2. - [ ] Utilizar vectores para almacenar $n$ partículas
 
 3. - [ ] Crear función para calcular la distancia de cada eje entre ambas partículas
 
-4. - [ ] Usando esta función, aplicar para vectores, es ddecir, distancia $(V_1, V_2) = V_r$ donde $V_r(0) = distancia(V_1(0), V_2(0))$
+4. - [ ] Usando esta función, aplicar para vectores, es decir, distancia $(V_1, V_2) = V_r$ donde $V_r(0) = distancia(V_1(0), V_2(0))$
 
 5. - [ ] Intentar usar AVX para las operaciones
-
-
-
-Cada partícula debe tener una función que imprima sus coordenadas.
 
 ### Concept Lab
 
 No es parte de la tarea, pero es una carpeta donde me dispongo a probar conceptos de C para entenderlos mejor basándome en algunos libros y muchas referencias en línea. Hasta ahora contiene:
 
 * Apuntadores, un tema que me explota la cabeza xd
+
+## NOTA: Todos los códigos en example son autoría del profesor de la materia, por consiguiente, las copias de los mismos en mis distintas tareas, yo desarrollo modificaciones para que se ajusten a la tarea en curso y aveces implemento desde cero.

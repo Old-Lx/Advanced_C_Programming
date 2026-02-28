@@ -17,7 +17,7 @@
     2. - [x] Utilizar alojador de stack para construir una calculadora de stack usando ReversePolishNotation (RPN)
 
 ### Tarea 5
-1. - [ ] Usar los vectores para implementar una estructura custom para una partícula (posición $(x, y, z)$ y su velocidad $\vec{v}$)
+1. - [x] Usar los vectores para implementar una estructura custom para una partícula (posición $(x, y, z)$ y su velocidad $\vec{v}$)
 
 2. - [ ] Utilizar vectores para almacenar $n$ partículas
 

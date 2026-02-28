@@ -19,7 +19,7 @@
 ### Tarea 5
 1. - [x] Usar los vectores para implementar una estructura custom para una partícula (posición $(x, y, z)$ y su velocidad $\vec{v}$)
 
-2. - [ ] Utilizar vectores para almacenar $n$ partículas
+2. - [x] Utilizar vectores para almacenar $n$ partículas
 
 3. - [ ] Crear función para calcular la distancia de cada eje entre ambas partículas
 
@@ -33,4 +33,5 @@ No es parte de la tarea, pero es una carpeta donde me dispongo a probar concepto
 
 * Apuntadores, un tema que me explota la cabeza xd
 
-## NOTA: Todos los códigos en example son autoría del profesor de la materia, por consiguiente, las copias de los mismos en mis distintas tareas, yo desarrollo modificaciones para que se ajusten a la tarea en curso y aveces implemento desde cero.
+## NOTA: 
+Todos los códigos en example son autoría del profesor de la materia, por consiguiente, las copias de los mismos en mis distintas tareas, yo desarrollo modificaciones para que se ajusten a la tarea en curso y aveces implemento desde cero.

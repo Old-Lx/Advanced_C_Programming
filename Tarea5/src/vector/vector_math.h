@@ -4,5 +4,7 @@
 #include "vector_common.h"
 
 void vector_add(s_vector* vector_a, s_vector* vector_b, s_vector* result);
+// Resta de vectores
+void vector_sub(s_vector* vector_a, s_vector* vector_b, s_vector* result);
 
 #endif

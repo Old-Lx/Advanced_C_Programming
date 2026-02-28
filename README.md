@@ -21,11 +21,13 @@
 
 2. - [x] Utilizar vectores para almacenar $n$ partículas
 
-3. - [ ] Crear función para calcular la distancia de cada eje entre ambas partículas
+3. - [x] Crear función para calcular la distancia de cada eje entre ambas partículas
 
-4. - [ ] Usando esta función, aplicar para vectores, es decir, distancia $(V_1, V_2) = V_r$ donde $V_r(0) = distancia(V_1(0), V_2(0))$
+4. - [x] Usando esta función, aplicar para vectores, es decir, distancia $(V_1, V_2) = V_r$ donde $V_r(0) = distancia(V_1(0), V_2(0))$
 
 5. - [ ] Intentar usar AVX para las operaciones
+
+6. - [ ] Debuggear y verificar que funcione
 
 ### Concept Lab
 

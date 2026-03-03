@@ -1,14 +1,18 @@
-# Name of the executable to be generated #
-TARGET_EXECUTABLE := exec
-
 # Compiler flags for debugging #
 DEBUG_FLAGS := -g3 -Og -Wall -Wextra -Werror
 
 # Directories for organizing files #
 BUILD_DIR := ./debug
 
+# Name of the executable to be generated #
+BIN_DIR := $(BUILD_DIR)/bin
+TARGET_EXECUTABLE := exec
+
 # Source directories #
 SRC_DIR := ./src
+
+# Librerías
+LIBS := -lm
 
 # Get directories based on source file structures #
 DIRECTORIES := $(shell find $(SRC_DIR) -type d)
@@ -23,19 +27,20 @@ C_OBJ_FILES := $(C_SRC_FILES:%.c=$(BUILD_DIR)/%.o)
 ASM_OBJ_FILES := $(ASM_SRC_FILES:%.asm=$(BUILD_DIR)/%.o)
 
 # Build Steps #
-$(BUILD_DIR)/$(TARGET_EXECUTABLE): $(C_OBJ_FILES) $(ASM_OBJ_FILES)
-	gcc $^ -o $@ $(DIRECTORIES_FLAGS) $(DEBUG_FLAGS)
+$(BIN_DIR)/$(TARGET_EXECUTABLE): $(C_OBJ_FILES) $(ASM_OBJ_FILES)
+	@mkdir -p $(dir $@)
+	@gcc $^ -o $@ $(DIRECTORIES_FLAGS) $(DEBUG_FLAGS) $(LIBS)
 
 # Pattern rule to compile C source files into object files #
 $(BUILD_DIR)/%.o: %.c
-	mkdir -p $(dir $@)
-	gcc -c $< -o $@ $(DIRECTORIES_FLAGS) $(DEBUG_FLAGS)
+	@mkdir -p $(dir $@)
+	@gcc -c $< -o $@ $(DIRECTORIES_FLAGS) $(DEBUG_FLAGS)
 
 # Pattern rule to compile ASM source files into object files #
 $(BUILD_DIR)/%.o: %.asm
-	mkdir -p $(dir $@)
-	nasm -g -f elf64 -F dwarf $< -o $@
+	@mkdir -p $(dir $@)
+	@nasm -g -f elf64 -F dwarf $< -o $@
 
 
 .PHONY: clean
-	rm -r $(BUILD_DIR)
+	@rm -r $(BUILD_DIR)

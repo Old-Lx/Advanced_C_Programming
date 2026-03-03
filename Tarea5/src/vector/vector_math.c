@@ -11,7 +11,7 @@ static void vector_add_u8(s_vector* vector_a, s_vector* vector_b, s_vector* resu
 static void vector_add_u8_avx(s_vector* vector_a, s_vector* vector_b, s_vector* result, size_t cycle_repetitions){
     for(size_t index =0 ; index < cycle_repetitions; index++){
         size_t offset = index * 32;
-        avx_uint8_t(((uint8_t *)vector_a->memory + offset), ((uint8_t *)vector_b->memory + offset), ((uint8_t *)result->memory + offset));
+        avx_sum_uint8_t(((uint8_t *)vector_a->memory + offset), ((uint8_t *)vector_b->memory + offset), ((uint8_t *)result->memory + offset));
     }
 }
 
@@ -24,7 +24,7 @@ static void vector_add_u16(s_vector* vector_a, s_vector* vector_b, s_vector* res
 static void vector_add_u16_avx(s_vector* vector_a, s_vector* vector_b, s_vector* result, size_t cycle_repetitions){
     for(size_t index =0 ; index < cycle_repetitions; index++){
         size_t offset = index * 16;
-        avx_uint16_t(((uint16_t *)vector_a->memory + offset), ((uint16_t *)vector_b->memory + offset), ((uint16_t *)result->memory + offset));
+        avx_sum_uint16_t(((uint16_t *)vector_a->memory + offset), ((uint16_t *)vector_b->memory + offset), ((uint16_t *)result->memory + offset));
     }
 }
 
@@ -37,7 +37,7 @@ static void vector_add_u32(s_vector* vector_a, s_vector* vector_b, s_vector* res
 static void vector_add_u32_avx(s_vector* vector_a, s_vector* vector_b, s_vector* result, size_t cycle_repetitions){
     for(size_t index =0 ; index < cycle_repetitions; index++){
         size_t offset = index * 8;
-        avx_uint32_t(((uint32_t *)vector_a->memory + offset), ((uint32_t *)vector_b->memory + offset), ((uint32_t *)result->memory + offset));
+        avx_sum_uint32_t(((uint32_t *)vector_a->memory + offset), ((uint32_t *)vector_b->memory + offset), ((uint32_t *)result->memory + offset));
     }
 }
 
@@ -50,7 +50,7 @@ static void vector_add_u64(s_vector* vector_a, s_vector* vector_b, s_vector* res
 static void vector_add_u64_avx(s_vector* vector_a, s_vector* vector_b, s_vector* result, size_t cycle_repetitions){
     for(size_t index =0 ; index < cycle_repetitions; index++){
         size_t offset = index * 4;
-        avx_uint64_t(((uint64_t *)vector_a->memory + offset), ((uint64_t *)vector_b->memory + offset), ((uint64_t *)result->memory + offset));
+        avx_sum_uint64_t(((uint64_t *)vector_a->memory + offset), ((uint64_t *)vector_b->memory + offset), ((uint64_t *)result->memory + offset));
     }
 }
 
@@ -63,7 +63,7 @@ static void vector_add_f32(s_vector* vector_a, s_vector* vector_b, s_vector* res
 static void vector_add_f32_avx(s_vector* vector_a, s_vector* vector_b, s_vector* result, size_t cycle_repetitions){
     for(size_t index =0 ; index < cycle_repetitions; index++){
         size_t offset = index * 8;
-        avx_float32_t(((float *)vector_a->memory + offset), ((float *)vector_b->memory + offset), ((float *)result->memory + offset));
+        avx_sum_float32_t(((float *)vector_a->memory + offset), ((float *)vector_b->memory + offset), ((float *)result->memory + offset));
     }
 }
 
@@ -165,7 +165,7 @@ static void vector_sub_u8(s_vector* vector_a, s_vector* vector_b, s_vector* resu
 static void vector_sub_u8_avx(s_vector* vector_a, s_vector* vector_b, s_vector* result, size_t cycle_repetitions){
     for(size_t index =0 ; index < cycle_repetitions; index++){
         size_t offset = index * 32;
-        avx_uint8_t(((uint8_t *)vector_a->memory + offset), ((uint8_t *)vector_b->memory + offset), ((uint8_t *)result->memory + offset));
+        avx_sub_uint8_t(((uint8_t *)vector_a->memory + offset), ((uint8_t *)vector_b->memory + offset), ((uint8_t *)result->memory + offset));
     }
 }
 
@@ -178,7 +178,7 @@ static void vector_sub_u16(s_vector* vector_a, s_vector* vector_b, s_vector* res
 static void vector_sub_u16_avx(s_vector* vector_a, s_vector* vector_b, s_vector* result, size_t cycle_repetitions){
     for(size_t index =0 ; index < cycle_repetitions; index++){
         size_t offset = index * 16;
-        avx_uint16_t(((uint16_t *)vector_a->memory + offset), ((uint16_t *)vector_b->memory + offset), ((uint16_t *)result->memory + offset));
+        avx_sub_uint16_t(((uint16_t *)vector_a->memory + offset), ((uint16_t *)vector_b->memory + offset), ((uint16_t *)result->memory + offset));
     }
 }
 
@@ -191,7 +191,7 @@ static void vector_sub_u32(s_vector* vector_a, s_vector* vector_b, s_vector* res
 static void vector_sub_u32_avx(s_vector* vector_a, s_vector* vector_b, s_vector* result, size_t cycle_repetitions){
     for(size_t index =0 ; index < cycle_repetitions; index++){
         size_t offset = index * 8;
-        avx_uint32_t(((uint32_t *)vector_a->memory + offset), ((uint32_t *)vector_b->memory + offset), ((uint32_t *)result->memory + offset));
+        avx_sub_uint32_t(((uint32_t *)vector_a->memory + offset), ((uint32_t *)vector_b->memory + offset), ((uint32_t *)result->memory + offset));
     }
 }
 
@@ -204,7 +204,7 @@ static void vector_sub_u64(s_vector* vector_a, s_vector* vector_b, s_vector* res
 static void vector_sub_u64_avx(s_vector* vector_a, s_vector* vector_b, s_vector* result, size_t cycle_repetitions){
     for(size_t index =0 ; index < cycle_repetitions; index++){
         size_t offset = index * 4;
-        avx_uint64_t(((uint64_t *)vector_a->memory + offset), ((uint64_t *)vector_b->memory + offset), ((uint64_t *)result->memory + offset));
+        avx_sub_uint64_t(((uint64_t *)vector_a->memory + offset), ((uint64_t *)vector_b->memory + offset), ((uint64_t *)result->memory + offset));
     }
 }
 
@@ -217,7 +217,7 @@ static void vector_sub_f32(s_vector* vector_a, s_vector* vector_b, s_vector* res
 static void vector_sub_f32_avx(s_vector* vector_a, s_vector* vector_b, s_vector* result, size_t cycle_repetitions){
     for(size_t index =0 ; index < cycle_repetitions; index++){
         size_t offset = index * 8;
-        avx_float32_t(((float *)vector_a->memory + offset), ((float *)vector_b->memory + offset), ((float *)result->memory + offset));
+        avx_sub_float32_t(((float *)vector_a->memory + offset), ((float *)vector_b->memory + offset), ((float *)result->memory + offset));
     }
 }
 

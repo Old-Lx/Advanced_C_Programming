@@ -11,7 +11,7 @@
 
 /* Crear y eliminar apuntador a partícula */
 // Crea un nuevo apuntador de partículas
-s_particle* particle_new(size_t item_size, e_vector_type pos_type, e_vector_type vel_type, size_t initial_size);
+s_particle* particle_new(size_t pos_size, size_t vel_size, e_vector_type pos_type, e_vector_type vel_type, size_t initial_size);
 // Elimina apuntador de partículas
 void particle_delete(s_particle* particle);
 

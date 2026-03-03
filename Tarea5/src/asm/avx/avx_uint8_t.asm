@@ -1,9 +1,10 @@
 [BITS 64]
 
 section     .text
-    global avx_uint8_t
+    global avx_sum_uint8_t
+    global avx_sub_uint8_t
     
-    avx_uint8_t:
+    avx_sum_uint8_t:
     
         ;Copy Vectors
         vmovdqu   ymm0,   [rdi]
@@ -13,6 +14,23 @@ section     .text
         ;Sum Vectors
         vpaddb      ymm2,   ymm0
         vpaddb      ymm2,   ymm1
+
+        ;Move vectors to result output
+        vmovdqu   [rdx],  ymm2
+
+        mov rax, 1
+        ret
+
+    avx_sub_uint8_t:
+    
+        ;Copy Vectors
+        vmovdqu   ymm0,   [rdi]
+        vmovdqu   ymm1,   [rsi]
+        vmovdqu   ymm2,   [rdx]
+
+        ;sub Vectors
+        vpsubb      ymm2,   ymm0
+        vpsubb      ymm2,   ymm1
 
         ;Move vectors to result output
         vmovdqu   [rdx],  ymm2

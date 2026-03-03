@@ -20,6 +20,8 @@ s_particle* particle_new(size_t pos_size, size_t vel_size, e_vector_type pos_typ
 
     // Alocamos la memoria WOOOOO
     s_particle* particle = (s_particle*) malloc(sizeof(s_particle));
+    particle->pos = vector_new(pos_size, pos_type, 3);
+    particle->vel = vector_new(vel_size, vel_type, 3);
 
     // Si la memoria no aguanta la locura, no se puede hacer nada
     if(!particle){
@@ -127,6 +129,9 @@ bool particle_push(s_particle* particle, s_vector* pos, s_vector* vel) {
     if (particle->item_size == particle->pos_size + particle->vel_size) {
         memcpy(reference_ptr, pos, particle->pos_size);
         memcpy(reference_ptr, vel, particle->vel_size);
+
+        vector_push(particle->pos, pos);
+        vector_push(particle->vel, vel);
     } else {
         // Si el tamaño del item es distinto al tamaño de la posición más el tamaño de la velocidad, hicimos algo mal
         return false;
@@ -201,6 +206,9 @@ bool particle_insert(s_particle* particle, s_vector* pos, s_vector* vel, size_t 
     if (particle->item_size == particle->pos_size + particle->vel_size) {
         memcpy(reference_ptr, pos, particle->pos_size);
         memcpy(reference_ptr, vel, particle->vel_size);
+
+        vector_push(particle->pos, pos);
+        vector_push(particle->vel, vel);
         particle->item_used++;
     } else {
         return false;
@@ -264,5 +272,9 @@ size_t particle_size(s_particle* particle) {
 }
 // Vacía el apuntador de partículas
 bool particle_empty(s_particle* particle) {
+    if((!particle && !particle->memory)) {
+        return 0;
+    }
 
+    return particle->item_used == 0;
 }

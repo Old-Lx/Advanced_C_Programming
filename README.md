@@ -25,7 +25,8 @@
 
 4. - [x] Usando esta función, aplicar para vectores, es decir, distancia $(V_1, V_2) = V_r$ donde $V_r(0) = distancia(V_1(0), V_2(0))$
 
-5. - [ ] Intentar usar AVX para las operaciones
+5. - [x] Intentar usar AVX para las operaciones
+    * [Lista de instrucciones AVX2](https://docs.oracle.com/cd/E36784_01/html/E36859/gntae.html) 
 
 6. - [ ] Debuggear y verificar que funcione
 
@@ -35,5 +36,8 @@ No es parte de la tarea, pero es una carpeta donde me dispongo a probar concepto
 
 * Apuntadores, un tema que me explota la cabeza xd
 
-## NOTA: 
+## NOTA 1: 
 Todos los códigos en example son autoría del profesor de la materia, por consiguiente, las copias de los mismos en mis distintas tareas, yo desarrollo modificaciones para que se ajusten a la tarea en curso y aveces implemento desde cero.
+
+### Nota 2:
+Para debuggear con la extensión gdb de VS Code hay que editar launch.json y tasks.json

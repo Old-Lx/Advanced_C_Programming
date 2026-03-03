@@ -5,7 +5,7 @@
             "name": "gdb",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/Tarea4/debug/bin/main", 
+            "program": "${workspaceRoot}/Tarea5/debug/bin/exec", 
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
             "MIMode": "gdb",

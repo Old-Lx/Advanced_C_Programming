@@ -173,7 +173,7 @@ void* vector_at(s_vector* vector, size_t position){
     }
 
     /* Return reference to item in memory*/
-    return (void*) ((uint8_t*)vector->memory + (position * (vector->item_size)));
+    return (void*)((uint8_t*)vector->memory + (position * (vector->item_size)));
 };
 
 

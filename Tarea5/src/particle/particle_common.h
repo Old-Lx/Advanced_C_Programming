@@ -18,7 +18,8 @@ typedef struct S_PARTICLE {
     e_vector_type pos_type;
     e_vector_type vel_type;
 
-    void* memory;
+    void* pos_memory;
+    void* vel_memory;
 } s_particle;
 
 #endif

@@ -23,7 +23,7 @@ bool particle_pop(s_particle* particle, void* storage);
 // Agrega partícula al apuntador de partículas en la posición position O(n)
 bool particle_insert(s_particle* particle, s_vector* pos, s_vector* vel, size_t position);
 // Muestra la partícula en la posición position O(1)
-void* particle_at(s_particle* particle, size_t position);
+s_particle* particle_at(s_particle* particle, size_t position);
 // Elimina partícula del apuntador de partículas en la posición position O(n)
 bool particle_erase(s_particle* particle, size_t position);  
 

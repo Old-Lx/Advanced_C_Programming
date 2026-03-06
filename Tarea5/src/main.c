@@ -70,12 +70,18 @@ int main(){
     vector_push(vel_particle2, &test_vel_data2[1]);
     vector_push(vel_particle2, &test_vel_data2[2]);
 
+    uint8_t pos1 = *(uint8_t *)vector_at(pos_particle1, 0);
+    printf("pos 1 address: %d\n", pos1);
+
     // Introducimos cada partícula en el vector de partículas y el sistema de partículas
     particle_push(particles_system, pos_particle1, vel_particle1);
     particle_push(particles_system, pos_particle2, vel_particle2);
 
-    printf("pos 1 address: %d\n", *(int *)&test_pos_data1);
-    printf("pos 1 address from vector: %d\n", *(int *)pos_particle1->memory);
+    s_vector* test_ptr = particle_at(particles_system, 0);
+    uint8_t pos2 = *(uint8_t *)vector_at(particles_system->pos, 0);
+    printf("pos 1 address: %d\n", pos2);
+
+
 
     // Generamos un vector de n partículas
     s_vector* particles_vector = n_particles_vector(n, particle_at(particles_system, 0), particle_at(particles_system, 1));
@@ -91,7 +97,7 @@ int main(){
 
     vector_erase(particles_vector, 1);
 
-    uint8_t test_ptr;
+    // uint8_t test_ptr;
     vector_pop(particles_vector, (void*) &test_ptr);
     vector_pop(particles_vector, (void*) &test_ptr);
     vector_pop(particles_vector, (void*) &test_ptr);

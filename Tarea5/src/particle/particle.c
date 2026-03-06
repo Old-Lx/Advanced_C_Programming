@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -22,6 +23,7 @@ s_particle* particle_new(size_t pos_size, size_t vel_size, e_vector_type pos_typ
     s_particle* particle = (s_particle*) malloc(sizeof(s_particle));
     particle->pos = vector_new(pos_size, pos_type, 3);
     particle->vel = vector_new(vel_size, vel_type, 3);
+    particle->item_size = item_size;
 
     // Si la memoria no aguanta la locura, no se puede hacer nada
     if(!particle){
@@ -77,13 +79,15 @@ s_particle* particle_new(size_t pos_size, size_t vel_size, e_vector_type pos_typ
     }
 
     // Reservamos la memoria necesaria para nuestra partícula
-    particle->memory = malloc(item_size * initial_size);
+    particle->pos_memory = malloc(pos_size * initial_size);
+    particle->vel_memory = malloc(vel_size * initial_size);
 
     // Nos aseguramos de que la memoria no tenga nada raro
-    memset(particle->memory, 0x00, initial_size);
+    memset(particle->pos_memory, 0x00, initial_size);
+    memset(particle->vel_memory, 0x00, initial_size);
 
     // Si no pudimos reservar suficiente memorias, retornamos NULL
-    if(!particle->memory){
+    if(!particle->pos_memory || !particle->vel_memory){
         free(particle);
         return NULL;
     }
@@ -96,9 +100,9 @@ void particle_delete(s_particle* particle) {
     // Verificamos que haya partícula para borrar, es decir, que el apuntador no sea NULL
     if(particle){
 
-        // Liberamos la memoria si está resercada
-        if(particle->memory){
-            free(particle->memory);
+        // Liberamos la memoria si está reservada
+        if(particle->pos_memory && particle->vel_memory){
+            free(particle->pos_memory);
         }
 
         // Liberamos el apuntador de partícula
@@ -106,11 +110,12 @@ void particle_delete(s_particle* particle) {
     }
 }
 
+// DEBUGGEAR PUSH Y POP
 // Agrega partícula al apuntador de partículas en su última posición O(1)
 bool particle_push(s_particle* particle, s_vector* pos, s_vector* vel) {
     
     // Evitemos posibles seg fault
-    if(!(particle && particle->memory && pos && vel)){
+    if(!(particle && particle->pos_memory && particle->vel_memory && pos && vel)){
         return false;
     }
 
@@ -119,19 +124,32 @@ bool particle_push(s_particle* particle, s_vector* pos, s_vector* vel) {
         particle->item_count <<= 1;
 
         // realocamos la memoria por si la posición del pointer cambia, hay que evitar seg faults
-        particle->memory = realloc(particle->memory, particle->item_count);
+        particle->pos_memory = realloc(particle->pos_memory, particle->item_count);
+        particle->vel_memory = realloc(particle->vel_memory, particle->item_count);
     }
 
     // Hacemos casting de la referencia para liberar la memoria a usar
-    void* reference_ptr = (void*)((uint8_t*)particle->memory + (particle->item_used * (particle->item_size)));
+    void* pos_reference_ptr = (void*)((uint8_t*)particle->pos_memory + (particle->item_used * (particle->pos_size)));
+    void* vel_reference_ptr = (void*)((uint8_t*)particle->vel_memory + (particle->item_used * (particle->vel_size)));
 
     // Acá es que varía respecto a la implementación de vector porque necesitamos copiar tanto posición como velocidad
     if (particle->item_size == particle->pos_size + particle->vel_size) {
-        memcpy(reference_ptr, pos, particle->pos_size);
-        memcpy(reference_ptr, vel, particle->vel_size);
+        
+        uint8_t pos1 = *(uint8_t *)vector_at(pos, 0);
+        printf("pos x from vector: %d\n", pos1);
+
+        memcpy(pos_reference_ptr, pos, particle->pos_size);
+        memcpy(vel_reference_ptr, vel, particle->vel_size);
 
         vector_push(particle->pos, pos);
         vector_push(particle->vel, vel);
+
+        //uint8_t pos2 = *(uint8_t *)vector_at((s_vector*)particle->memory + ((particle->item_used - 1) * (particle->item_size)) + particle->pos_size, 0);
+        //printf("pos x from particle memory: %d\n", pos2);
+
+
+        // uint8_t pos3 = *(uint8_t *)vector_at((s_vector *)vector_at(particle->pos, 0), 0);
+        // printf("pos x from particle->pos: %d\n", pos3);
     } else {
         // Si el tamaño del item es distinto al tamaño de la posición más el tamaño de la velocidad, hicimos algo mal
         return false;
@@ -145,7 +163,7 @@ bool particle_push(s_particle* particle, s_vector* pos, s_vector* vel) {
 bool particle_pop(s_particle* particle, void* storage) {
 
     // Evitemos posibles seg fault
-    if(!(particle && particle->memory && storage)){
+    if(!(particle && particle->pos_memory && particle->vel_memory && storage)){
         return false;
     }
 
@@ -155,15 +173,18 @@ bool particle_pop(s_particle* particle, void* storage) {
     }
 
     // Tomamos el último elemento de nuestro apuntador a partículas
-    void* reference_ptr = (void*)((uint8_t*)particle->memory + ((particle->item_used - 1) * (particle->item_size)));
+    void* pos_reference_ptr = (void*)((uint8_t*)particle->pos_memory + (particle->item_used * (particle->pos_size)));
+    void* vel_reference_ptr = (void*)((uint8_t*)particle->vel_memory + (particle->item_used * (particle->vel_size)));
 
     // El tamaño del item debe ser la suma de posición y velocidad
     if (particle->item_size == particle->pos_size + particle->vel_size) {
         // Copiamos la partícula
-        memcpy(storage, reference_ptr, particle->item_size);
+        memcpy(storage, pos_reference_ptr, particle->pos_size);
+        memcpy(storage, vel_reference_ptr, particle->vel_size);
 
         /* zero the memory*/
-        memset(reference_ptr,0x00, particle->item_size);
+        memset(pos_reference_ptr,0x00, particle->item_size);
+        memset(vel_reference_ptr,0x00, particle->item_size); 
 
         particle->item_used--;
     } else {
@@ -176,7 +197,7 @@ bool particle_pop(s_particle* particle, void* storage) {
 bool particle_insert(s_particle* particle, s_vector* pos, s_vector* vel, size_t position) {
     
     // Evitemos posibles seg fault
-    if(!(particle && particle->memory && pos && vel)){
+    if(!(particle && particle->pos_memory && particle->vel_memory && pos && vel)){
         return false;
     }
 
@@ -188,24 +209,31 @@ bool particle_insert(s_particle* particle, s_vector* pos, s_vector* vel, size_t 
     // Reservar más memoria si no hay suficiente
     if(particle->item_count == particle->item_used){
         particle->item_count <<= 1;
-        particle->memory = realloc(particle->memory, particle->item_count << 1);
+        particle->pos_memory = realloc(particle->pos_memory, particle->item_count << 1);
+        particle->vel_memory = realloc(particle->vel_memory, particle->item_count << 1);
     }
 
     // Movemos todos las las partículas desde la posición donde queremos poner nuestra partícula
     for(size_t index = particle->item_used + 1; index > position; index--){ 
-        void* destination_reference_ptr = (void*)((uint8_t*)particle->memory + (index * (particle->item_size)));
-        void* copy_reference_ptr = (void*)((uint8_t*)particle->memory + ((index - 1) * (particle->item_size)));
-        memcpy(destination_reference_ptr, copy_reference_ptr, particle->item_size);
-        memset(copy_reference_ptr, 0x00, particle->item_size);
+        void* pos_destination_reference_ptr = (void*)((uint8_t*)particle->pos_memory + (index * (particle->pos_size)));
+        void* pos_copy_reference_ptr = (void*)((uint8_t*)particle->pos_memory + ((index - 1) * (particle->pos_size)));
+        memcpy(pos_destination_reference_ptr, pos_copy_reference_ptr, particle->pos_size);
+        memset(pos_copy_reference_ptr, 0x00, particle->pos_size);
+
+        void* vel_destination_reference_ptr = (void*)((uint8_t*)particle->vel_memory + (index * (particle->vel_size)));
+        void* vel_copy_reference_ptr = (void*)((uint8_t*)particle->vel_memory + ((index - 1) * (particle->vel_size)));
+        memcpy(vel_destination_reference_ptr, vel_copy_reference_ptr, particle->vel_size);
+        memset(vel_copy_reference_ptr, 0x00, particle->vel_size);
     }
 
     // Tomamos la referencia de la posición donde queremos poner la data
-    void* reference_ptr = (void*)((uint8_t*)particle->memory + (position * (particle->item_size)));
+    void* pos_reference_ptr = (void*)((uint8_t*)particle->pos_memory + (position * (particle->pos_size)));
+    void* vel_reference_ptr = (void*)((uint8_t*)particle->vel_memory + (position * (particle->vel_size)));
 
     // Igual que antes, nos aseguramos que el tamaño de la posición más la velocidad no exceda el tamaño de la partícula
     if (particle->item_size == particle->pos_size + particle->vel_size) {
-        memcpy(reference_ptr, pos, particle->pos_size);
-        memcpy(reference_ptr, vel, particle->vel_size);
+        memcpy(pos_reference_ptr, pos, particle->pos_size);
+        memcpy(vel_reference_ptr, vel, particle->vel_size);
 
         vector_push(particle->pos, pos);
         vector_push(particle->vel, vel);
@@ -218,10 +246,10 @@ bool particle_insert(s_particle* particle, s_vector* pos, s_vector* vel, size_t 
 }
 
 // Muestra la partícula en la posición position O(1)
-void* particle_at(s_particle* particle, size_t position) {
+s_particle* particle_at(s_particle* particle, size_t position) {
     
     // Verificamos la memoria
-    if(!(particle && particle->memory)){
+    if(!(particle && particle->pos_memory && particle->vel_memory)){
         return NULL;
     }
     
@@ -230,8 +258,14 @@ void* particle_at(s_particle* particle, size_t position) {
         return NULL;
     }
 
+    s_particle* reference_ptr = particle_new(particle->pos_size, particle->vel_size, particle->pos_type, particle->vel_type, 1);
+
+    reference_ptr->pos = (s_vector*)((uint8_t*)particle->pos_memory + (position * (particle->pos_size)));
+    reference_ptr->vel = (s_vector*)((uint8_t*)particle->vel_memory + (position * (particle->vel_size)));
+
+
     // Retornamos la referencia al elemento
-    return (void*) ((uint8_t*)particle->memory + (position * (particle->item_size)));
+    return reference_ptr;
 }
 
 // Elimina partícula del apuntador de partículas en la posición position O(n)
@@ -239,7 +273,7 @@ bool particle_erase(s_particle* particle, size_t position) {
 
 
     // Verificamos memoria
-    if(!(particle && particle->memory)){
+    if(!(particle && particle->pos_memory && particle->vel_memory)){
         return false;
     }
 
@@ -250,10 +284,15 @@ bool particle_erase(s_particle* particle, size_t position) {
 
     // Limpiamos la posición deseada y luego  reajustamos los apuntadores
     for(size_t index = position; index < particle->item_used; index++){ 
-        void* copy_reference_ptr = (void*)((uint8_t*)particle->memory + ((index + 1) * (particle->item_size)));
-        void* destination_reference_ptr = (void*)((uint8_t*)particle->memory + (index * (particle->item_size)));
-        memset(destination_reference_ptr, 0x00, particle->item_size);
-        memcpy(destination_reference_ptr, copy_reference_ptr, particle->item_size);
+        void* pos_copy_reference_ptr = (void*)((uint8_t*)particle->pos_memory + ((index + 1) * (particle->pos_size)));
+        void* pos_destination_reference_ptr = (void*)((uint8_t*)particle->pos_memory + (index * (particle->pos_size)));
+        memset(pos_destination_reference_ptr, 0x00, particle->pos_size);
+        memcpy(pos_destination_reference_ptr, pos_copy_reference_ptr, particle->pos_size);
+
+        void* vel_copy_reference_ptr = (void*)((uint8_t*)particle->vel_memory + ((index + 1) * (particle->vel_size)));
+        void* vel_destination_reference_ptr = (void*)((uint8_t*)particle->vel_memory + (index * (particle->vel_size)));
+        memset(vel_destination_reference_ptr, 0x00, particle->vel_size);
+        memcpy(vel_destination_reference_ptr, vel_copy_reference_ptr, particle->vel_size);
     }
 
     particle->item_used--;
@@ -264,7 +303,7 @@ bool particle_erase(s_particle* particle, size_t position) {
 // Muestra el tamaño del apuntador de partículas
 size_t particle_size(s_particle* particle) {
 
-    if(!(particle && particle->memory)) {
+    if(!(particle && particle->pos_memory && particle->vel_memory)) {
         return 0;
     }
 
@@ -272,7 +311,7 @@ size_t particle_size(s_particle* particle) {
 }
 // Vacía el apuntador de partículas
 bool particle_empty(s_particle* particle) {
-    if((!particle && !particle->memory)) {
+    if((!particle && !particle->pos_memory && !particle->vel_memory)) {
         return 0;
     }
 

@@ -70,28 +70,23 @@ int main(){
     vector_push(vel_particle2, &test_vel_data2[1]);
     vector_push(vel_particle2, &test_vel_data2[2]);
 
-    uint8_t pos1 = *(uint8_t *)vector_at(pos_particle1, 0);
-    printf("pos 1 address: %d\n", pos1);
-
     // Introducimos cada partícula en el vector de partículas y el sistema de partículas
     particle_push(particles_system, pos_particle1, vel_particle1);
     particle_push(particles_system, pos_particle2, vel_particle2);
 
-    s_vector* test_ptr = particle_at(particles_system, 0);
-    uint8_t pos2 = *(uint8_t *)vector_at(particles_system->pos, 0);
-    printf("pos 1 address: %d\n", pos2);
+    s_particle* test_ptr = particle_at(particles_system, 0);
+    /* uint8_t pos2 = *(uint8_t *)vector_at(particles_system->pos, 0);
+    printf("pos 1 address: %d\n", pos2); */
 
 
 
     // Generamos un vector de n partículas
     s_vector* particles_vector = n_particles_vector(n, particle_at(particles_system, 0), particle_at(particles_system, 1));
 
-    /*if(!vector_empty(particles_vector)){
-        printf("Vector size: %lu\n",vector_size(particles_vector));
-    }*/
-
     // Distancia entre partículas
-    size_t dist_btwn_particles = particle_absolute_distance(((s_particle *)particle_at(particles_system, 0))->pos, ((s_particle *)particle_at(particles_system, 1))->pos);
+    s_vector* pos1 = vector_at(particles_system->pos, 0);
+    s_vector* pos2 = vector_at(particles_system->pos, 1);;
+    size_t dist_btwn_particles = particle_absolute_distance(pos1, pos2);
 
     printf("Distancia entre partículas de prueba: %ld\n", dist_btwn_particles);
 

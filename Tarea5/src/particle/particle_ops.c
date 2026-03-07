@@ -1,4 +1,5 @@
 #include <math.h>
+#include <stdio.h>
 
 #include "particle_ops.h"
 #include "../asm/avx/avx.h"
@@ -23,12 +24,17 @@ s_vector* n_particles_vector(size_t n, ...) {
 
 // Distancia entre partículas en valor absoluto
 size_t particle_absolute_distance(s_vector* pos1, s_vector* pos2) {
+    printf("size 1: %ld, size 2: %ld\n", pos1->item_size, pos2->item_size);
     
     if (pos1->item_size == pos2->item_size) {
         // La distancia en forma vectorial es por definición la resta de vectores
         s_vector* distance_vector = vector_new(pos1->item_size, pos1->item_size, 1);
 
         vector_sub(pos1, pos2, distance_vector);
+
+        uint8_t test;
+        test = *(uint8_t *)vector_at(distance_vector, 0);
+        printf("vector distance in x %d\n", test);
 
         // Por definición, el valor absoluto de la distancia entre dos vectores es la raíz cuadrada de la suma de las restas de cada una de sus coordenadas al cuadrado
         size_t distance = sqrt(pow(*(size_t *)vector_at(distance_vector, 0), 2) + pow(*(size_t *)vector_at(distance_vector, 1), 2) + pow(*(size_t *)vector_at(distance_vector, 0), 2));

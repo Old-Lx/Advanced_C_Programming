@@ -134,22 +134,12 @@ bool particle_push(s_particle* particle, s_vector* pos, s_vector* vel) {
 
     // Acá es que varía respecto a la implementación de vector porque necesitamos copiar tanto posición como velocidad
     if (particle->item_size == particle->pos_size + particle->vel_size) {
-        
-        uint8_t pos1 = *(uint8_t *)vector_at(pos, 0);
-        printf("pos x from vector: %d\n", pos1);
 
         memcpy(pos_reference_ptr, pos, particle->pos_size);
         memcpy(vel_reference_ptr, vel, particle->vel_size);
 
         vector_push(particle->pos, pos);
         vector_push(particle->vel, vel);
-
-        //uint8_t pos2 = *(uint8_t *)vector_at((s_vector*)particle->memory + ((particle->item_used - 1) * (particle->item_size)) + particle->pos_size, 0);
-        //printf("pos x from particle memory: %d\n", pos2);
-
-
-        // uint8_t pos3 = *(uint8_t *)vector_at((s_vector *)vector_at(particle->pos, 0), 0);
-        // printf("pos x from particle->pos: %d\n", pos3);
     } else {
         // Si el tamaño del item es distinto al tamaño de la posición más el tamaño de la velocidad, hicimos algo mal
         return false;
